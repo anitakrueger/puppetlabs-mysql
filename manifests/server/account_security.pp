@@ -4,10 +4,10 @@ class mysql::server::account_security {
   database_user { [ "root@${::fqdn}", "root@${::hostname}", 'root@127.0.0.1',
                     "@${::fqdn}", "@${::hostname}", '@localhost', '@%' ]:
     ensure  => 'absent',
-    require => Class['mysql::config'],
+    require => Class['mysql::server'],
   }
   database { 'test':
     ensure  => 'absent',
-    require => Class['mysql::config'],
+    require => Class['mysql::server'],
   }
 }

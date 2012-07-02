@@ -12,7 +12,7 @@
 #    IDENTIFIED BY 'password';
 #
 # Requires:
-#   Class['mysql::config']
+#   Class['mysql::server']
 #
 # Sample Usage:
 #   class { 'mysql::backup':
@@ -32,7 +32,7 @@ class mysql::backup (
     ensure        => $ensure,
     password_hash => mysql_password($backuppassword),
     provider      => 'mysql',
-    require       => Class['mysql::config'],
+    require       => Class['mysql::server'],
   }
 
   database_grant { "${backupuser}@localhost":
