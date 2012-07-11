@@ -65,8 +65,17 @@ define mysql::db (
   $refresh = ! $enforce_sql
 
   if $sql {
+    case $sql {
+      /^.*\.gz/: {
+        $sqlcommand = "zcat ${sql} | mysql ${name}"
+      }
+      default: {
+        $sqlcommand = "/usr/bin/mysql ${name} < ${sql}"
+      }
+    }
     exec{ "${name}-import":
-      command     => "/usr/bin/mysql ${name} < ${sql}",
+      command     => $sqlcommand,
+      path => ['/sbin', '/usr/sbin', '/bin', '/usr/bin'],
       logoutput   => true,
       refreshonly => $refresh,
       require     => Database_grant["${user}@${host}/${name}"],
