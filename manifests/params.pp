@@ -33,7 +33,7 @@ class mysql::params {
       $service_name          = 'mysqld'
       $client_package_name   = 'mysql'
       $server_package_name   = 'mysql-server'
-      $socket                = '/var/lib/mysql/mysql.sock'
+      $socket                = '/var/run/mysqld/mysqld.sock'
       $config_file           = '/etc/my.cnf'
       $log_error             = '/var/log/mysqld.log'
       $ruby_package_name     = 'ruby-mysql'
@@ -44,6 +44,7 @@ class mysql::params {
       $ssl_ca                = '/etc/mysql/cacert.pem'
       $ssl_cert              = '/etc/mysql/server-cert.pem'
       $ssl_key               = '/etc/mysql/server-key.pem'
+      $backup_package_name   = 'percona-xtrabackup'
     }
 
     'Debian': {
@@ -62,6 +63,7 @@ class mysql::params {
       $ssl_ca               = '/etc/mysql/cacert.pem'
       $ssl_cert             = '/etc/mysql/server-cert.pem'
       $ssl_key              = '/etc/mysql/server-key.pem'
+      $backup_package_name  = 'percona-xtrabackup'
     }
 
     'FreeBSD': {
@@ -81,6 +83,7 @@ class mysql::params {
       $ssl_ca                = undef
       $ssl_cert              = undef
       $ssl_key               = undef
+      $backup_package_name   = undef
     }
 
     default: {
