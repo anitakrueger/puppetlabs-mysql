@@ -55,6 +55,11 @@ class mysql::server (
   $mysqld_extra_params = 'nil',
 ) inherits mysql::params {
 
+  File {
+    owner => 'mysql',
+    group => 'mysql',
+  }
+
   package { 'mysql-server':
     name   => $package_name,
     ensure => $package_ensure,
@@ -97,6 +102,8 @@ class mysql::server (
 
     file { '/root/.my.cnf':
       content => template('mysql/my.cnf.pass.erb'),
+      owner   => 'root',
+      group   => 'root',
       require => Exec['set_mysql_rootpw'],
     }
 
@@ -113,6 +120,7 @@ class mysql::server (
     '/etc/mysql/conf.d', ]:
     ensure  => directory,
     mode    => '0755',
+    require => Package ['mysql-server'],
   }
 
   file { $config_file:
